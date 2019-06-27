@@ -3,7 +3,7 @@ const path = require('path');
 const url = require('url');
 
 // SET ENV
-process.env.NODE_ENV = 'development';
+process.env.NODE_ENV = 'production';
 
 const {app, BrowserWindow, Menu, ipcMain} = electron;
 
@@ -13,7 +13,11 @@ let addWindow;
 // Listen for app to be ready
 app.on('ready', function(){
   // Create new window
-  mainWindow = new BrowserWindow({});
+  mainWindow = new BrowserWindow({
+    webPreferences: {
+      nodeIntegration: true
+    }
+  });
   // Load html in window
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'mainWindow.html'),
@@ -36,7 +40,10 @@ function createAddWindow(){
   addWindow = new BrowserWindow({
     width: 300,
     height:200,
-    title:'Add Shopping List Item'
+    title:'Add Shopping List Item',
+    webPreferences: {
+      nodeIntegration: true
+    }
   });
   addWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'addWindow.html'),
